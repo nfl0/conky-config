@@ -1,5 +1,8 @@
 # conky-config
-Conky config with Font Awesome and Conky Icons by Carelli  
+Conky config with Font Awesome and Conky Icons by Carelli
+
+# Demo
+[![screenshot](https://github.com/ajitjadhav28/conky-config/blob/master/demo.gif)] 
   
 #### **Notes**:
 You need to install following fonts
