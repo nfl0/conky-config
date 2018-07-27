@@ -1,8 +1,12 @@
 # conky-config
 Conky config with Font Awesome and Conky Icons by Carelli
 
+This is fork of [andrea-rosa/conky-config](https://github.com/andrea-rosa/conky-config) repository.
+I have modified it's configurations according to my needs.
+Thanks to **andrea-rosa** for this beautiful configuration.
+
 # Demo
-[![screenshot](https://github.com/ajitjadhav28/conky-config/blob/master/demo.gif)] 
+![screenshot](https://github.com/ajitjadhav28/conky-config/blob/master/demo.gif)
   
 #### **Notes**:
 You need to install following fonts
