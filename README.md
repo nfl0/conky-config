@@ -3,7 +3,7 @@ Conky config with Font Awesome and Conky Icons by Carelli
 
 This is fork of [andrea-rosa/conky-config](https://github.com/andrea-rosa/conky-config) repository.
 I have modified it's configurations according to my needs.
-Thanks to **andrea-rosa** for this beautiful configuration.
+Thanks to [andrea-rosa](https://github.com/andrea-rosa) for this beautiful configuration and [antoniocarelli](https://github.com/antoniocarelli) for icons.
 
 # Demo
 ![screenshot](https://github.com/ajitjadhav28/conky-config/blob/master/demo.gif)
