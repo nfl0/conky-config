@@ -2,7 +2,7 @@
 Conky config with Font Awesome and Conky Icons by Carelli
 
 This is fork of [andrea-rosa/conky-config](https://github.com/andrea-rosa/conky-config) repository.
-I have modified it according to my needs.
+It is modified according to my needs for Dell Inspiron 5520 laptop.
 Thanks to [andrea-rosa](https://github.com/andrea-rosa) for this beautiful configuration and [antoniocarelli](https://github.com/antoniocarelli) for icons.
 
 # Demo
