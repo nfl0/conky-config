@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Conky
+GenericName=Startup execution of conky
+Comment=Run launch script for conky
+Exec=~/.config/conky/launchConky.sh
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true

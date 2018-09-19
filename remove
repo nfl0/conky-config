@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# remove conky on debian based os
+CONKY=$( which conky )
+if [ -f $CONKY ]; then
+    sudo apt remove conky -y
+fi
+
+CONKY_PATH=~/.config/conky
+AUTOSTART="/etc/xdg/autostart"
+
+# remove conf files 
+rm "$CONKY_PATH/conky.conf"
+rm "$CONKY_PATH/launchConky.sh"
+rm "$CONKY_PATH/onResolutionChange.sh"
+echo "Configurations removed"
+
+sudo rm "$AUTOSTART/conky.desktop"
+echo "removed autostart entry from $AUTOSTART"
+
+rm "$CONKY_PATH/xeventbind"
+
+echo "Uninstallation complete."
+
+exit

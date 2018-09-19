@@ -26,3 +26,5 @@ if [[ $PRIMARY_HEIGHT == $CURRENT_HEIGHT ]]; then
 else
 	conky -x $CONKY_X -y $CONKY_Y
 fi
+
+$HOME/.config/conky/xeventbind resolution "$HOME/.config/conky/onResolutionChange.sh"
