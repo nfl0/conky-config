@@ -27,4 +27,5 @@ else
 	conky -x $CONKY_X -y $CONKY_Y
 fi
 
+# Start xeventbind and run onResolutionChange.sh on resolution change event
 $HOME/.config/conky/xeventbind resolution "$HOME/.config/conky/onResolutionChange.sh"
