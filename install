@@ -18,6 +18,7 @@ mkdir -p $CONKY_PATH
 cp conky.conf $CONKY_PATH
 cp launchConky.sh $CONKY_PATH
 cp onResolutionChange.sh $CONKY_PATH
+cp *.lua $CONKY_PATH
 echo "Configurations moved to $CONKY_PATH"
 
 awk -v home="$HOME" '{ if ($0 ~ /Exec=.*/) {printf("Exec=%s/.config/conky/launchConky.sh\n", home)} else { print $0}}' conky.desktop >> conkyMod.desktop
