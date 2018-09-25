@@ -5,7 +5,8 @@ Conky configurations for laptop with following features:
 - Laptop-Desktop Mode Indicator
 - battery indicator with capacity
 - CPU, RAM, HDD, GPU, WLAN info
-- top 5 cpu cpu hungry processes  
+- top 5 cpu hungry processes
+- all drives mounted in /media/$user/* are shown (default max 6)   
 
 This is fork of [andrea-rosa/conky-config](https://github.com/andrea-rosa/conky-config) repository.
 It is modified according to my needs for Dell Inspiron 5520 laptop.
