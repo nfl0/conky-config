@@ -3,7 +3,7 @@
 # remove conky on debian based os
 CONKY=$( which conky )
 if [ -f $CONKY ]; then
-    sudo apt remove conky -y
+    sudo apt remove conky-all -y
 fi
 
 CONKY_PATH=~/.config/conky
