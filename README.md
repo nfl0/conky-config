@@ -22,7 +22,8 @@ If asked password enter it. It is required to create autostart entry.
 #### This script installs conky on ubuntu if not installed. On distroes other than debian-based, conky should be installed first.
 
 # Demo
-![screenshot](https://github.com/ajitjadhav28/conky-config/blob/master/demo.gif)
+![gif](https://github.com/ajitjadhav28/conky-config/blob/master/demo.gif)
+![Screenshot](https://github.com/ajitjadhav28/conky-config/blob/master/Screenshot%20from%202019-04-02%2022-07-37.png)
   
 #### **Notes**:
 You need to install following fonts
