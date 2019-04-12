@@ -109,40 +109,6 @@ function conky_drawnetworks(n)
         end
         ifaces:close()
         if table.maxn(active_ifaces) >= 1 then
-            -- local wireless_ifaces = {}
-            
-            -- local other_ifaces = {}
-            -- local nwl_fl = io.popen('iwconfig | grep "no wireless extensions"')
-            -- for line in nwl_fl:lines() do
-            --     local oiface = string.sub(line, 1, string.find(a, " "))
-            --     if string.match(oiface, table.concat(active_if, ",")) then
-            --         table.insert(other_ifaces,oiface)
-            --     end
-            -- end
-
-            -- for i, iface in pairs(active_ifaces) do
-            --     if not string.match(iface, table.concat(other_ifaces, ",")) then
-            --         table.insert(wireless_ifaces, iface)
-            --     end
-            -- end
-
-            -- local draw_wlans = ''
-            -- for i, wlan in pairs(wireless_ifaces) do
-            --     draw_wlans = draw_wlans
-            --                     .. "${goto 20}${font Conky Icons by Carelli}E${font}${color #00FF00} "
-            --                     .. wlan .." $color channel: ${wireless_channel " .. wlan ..  "}, freq: ${wireless_freq "
-            --                     .. wlan .."}" .. "\n"
-            --                     .. "${goto 20}${font FontAwesome} ${font}${voffset 0} ${addrs " .. wlan ..  "} MAC: ${wireless_ap "
-            --                     .. wlan ..  "}" .. "\n"
-            --                     .. "${goto 20}${upspeedgraph " .. wlan ..  " 30,250 00ffff 00ff00}${goto 202}${downspeedgraph "
-            --                     .. wlan ..  " 30,175 FFFF00 DD3A21}" .. "\n"
-            --                     .. "${font FontAwesome}${goto 20}${font} ${upspeed "
-            --                     .. wlan ..  "}${font FontAwesome}${goto 202}${font} ${downspeed " .. wlan ..  "}" .. "\n"
-            --     if i < table.maxn( wireless_ifaces ) or i < table.maxn( active_ifaces ) then
-            --         draw_wlans = draw_wlans .. "${goto 20}${stippled_hr 1}\n"
-            --     end
-            -- end
-
             local draw_other_ifaces = '${goto 10}${font Conky Icons by Carelli}E${font} ${color #00FF00}Network Interfaces $color \n'
             for i, iface in pairs(active_ifaces) do
                 if i <= tonumber(n) then
@@ -160,8 +126,6 @@ function conky_drawnetworks(n)
             end
             active_network_interface = draw_other_ifaces
             return active_network_interface
-            -- active_network_interface = table.concat( active_ifaces, ",")
-            -- return table.concat( active_ifaces, ",")
         else
             return '${goto 10}${font Conky Icons by Carelli}E${font} ${color #00FF00}Network Interfaces $color \n${goto 50} Device not connected.\n'
         end
