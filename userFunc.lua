@@ -6,7 +6,10 @@ distribution = ''
 mounted_media = ''
 cpus = -1
 active_network_interface = false
+fan = 0
+ctemp = 0
 
+-- Conky main function
 function conky_main()
     if conky_window == nil then
         return
@@ -23,6 +26,7 @@ function conky_main()
     cr=nil
 end
 
+-- Returns processor name
 function conky_processor()
     if processor == '' then
         local file = io.popen("lscpu | grep -Po '(?<=Model name:)(.*)'")
@@ -33,6 +37,7 @@ function conky_processor()
     return processor
 end
 
+-- Returns distribution name
 function conky_distribution()
     if distribution == '' then
         local file = io.popen('cat /etc/lsb-release | grep -Po --regexp "(?<=DISTRIB_ID=).*$"')
@@ -45,6 +50,7 @@ function conky_distribution()
     return distribution
 end
 
+-- Draws max n mounted partitions and its stats
 function conky_mountmedia(n)
     if tonumber(conky_parse("$updates")) % 2 == 0 then
         local file = io.popen('lsblk | grep -oE ".*sd.* part /.*" | grep -oE "(/.*)"')
@@ -69,28 +75,33 @@ function conky_mountmedia(n)
         return mounted_media
 end
 
+-- Draws all cpu cores stats
 function conky_drawcpus()
-    if cpus == -1 then
+    if cpus == -1 or tonumber(conky_parse("$updates")) % 2 == 0 then
         local file = io.popen("lscpu -a -p='cpu' | tail -n 1")
-        cpus = trim(file:read("*a"))
+        local ncpu = trim(file:read("*a"))
         file:close()
-    end
-    local conky_cpus = ''
-    for c = 1, tonumber(cpus)  do
-        if c % 2 ~= 0 then
-            conky_cpus = conky_cpus
-                         .. "${goto 20}" .. c ..": ${goto 42}${cpu cpu".. c
-                         .."}%${goto 90}${cpubar 7,30 cpu".. c
-                         .."}${goto 130}${freq_g ".. c
-                         .."}GHz${goto 200}| ".. c+1 
-                         ..":${goto 240}${cpu cpu".. c+1
-                         .."}%${goto 285}${cpubar 7,30 cpu".. c+1 .."}${goto 325}${freq_g ".. c+1 .."}GHz"
-                         .. "\n"
+    
+        local conky_cpus = ''
+        for c = 1, tonumber(ncpu)  do
+            if c % 2 ~= 0 then
+                conky_cpus = conky_cpus
+                             .. "${goto 20}" .. c ..": ${goto 42}${cpu cpu".. c
+                             .."}%${goto 90}${cpubar 7,30 cpu".. c
+                             .."}${goto 130}${freq_g ".. c
+                             .."}GHz${goto 200}| ".. c+1 
+                             ..":${goto 240}${cpu cpu".. c+1
+                             .."}%${goto 285}${cpubar 7,30 cpu".. c+1 .."}${goto 325}${freq_g ".. c+1 .."}GHz"
+                             .. "\n"
+            end
         end
+        cpus = conky_cpus
+        return conky_cpus
     end
-    return conky_cpus   
+    return cpus   
 end
 
+-- Draws max n network interfaces
 function conky_drawnetworks(n)
     local active_ifaces = {}
     if active_network_interface == false or tonumber(conky_parse("$updates")) % 2 == 0 then
@@ -103,41 +114,7 @@ function conky_drawnetworks(n)
         end
         ifaces:close()
         if table.maxn(active_ifaces) >= 1 then
-            -- local wireless_ifaces = {}
-            
-            -- local other_ifaces = {}
-            -- local nwl_fl = io.popen('iwconfig | grep "no wireless extensions"')
-            -- for line in nwl_fl:lines() do
-            --     local oiface = string.sub(line, 1, string.find(a, " "))
-            --     if string.match(oiface, table.concat(active_if, ",")) then
-            --         table.insert(other_ifaces,oiface)
-            --     end
-            -- end
-
-            -- for i, iface in pairs(active_ifaces) do
-            --     if not string.match(iface, table.concat(other_ifaces, ",")) then
-            --         table.insert(wireless_ifaces, iface)
-            --     end
-            -- end
-
-            -- local draw_wlans = ''
-            -- for i, wlan in pairs(wireless_ifaces) do
-            --     draw_wlans = draw_wlans
-            --                     .. "${goto 20}${font Conky Icons by Carelli}E${font}${color #00FF00} "
-            --                     .. wlan .." $color channel: ${wireless_channel " .. wlan ..  "}, freq: ${wireless_freq "
-            --                     .. wlan .."}" .. "\n"
-            --                     .. "${goto 20}${font FontAwesome} ${font}${voffset 0} ${addrs " .. wlan ..  "} MAC: ${wireless_ap "
-            --                     .. wlan ..  "}" .. "\n"
-            --                     .. "${goto 20}${upspeedgraph " .. wlan ..  " 30,250 00ffff 00ff00}${goto 202}${downspeedgraph "
-            --                     .. wlan ..  " 30,175 FFFF00 DD3A21}" .. "\n"
-            --                     .. "${font FontAwesome}${goto 20}${font} ${upspeed "
-            --                     .. wlan ..  "}${font FontAwesome}${goto 202}${font} ${downspeed " .. wlan ..  "}" .. "\n"
-            --     if i < table.maxn( wireless_ifaces ) or i < table.maxn( active_ifaces ) then
-            --         draw_wlans = draw_wlans .. "${goto 20}${stippled_hr 1}\n"
-            --     end
-            -- end
-
-            local draw_other_ifaces = '${goto 10}${font Conky Icons by Carelli}E${font} ${color #00FF00}Network Interfaces $color \n'
+            local draw_other_ifaces = '${goto 10}${font FontAwesome}${font} ${color #00FF00}Network Interfaces $color \n'
             for i, iface in pairs(active_ifaces) do
                 if i <= tonumber(n) then
                     draw_other_ifaces = draw_other_ifaces
@@ -154,8 +131,6 @@ function conky_drawnetworks(n)
             end
             active_network_interface = draw_other_ifaces
             return active_network_interface
-            -- active_network_interface = table.concat( active_ifaces, ",")
-            -- return table.concat( active_ifaces, ",")
         else
             return '${goto 10}${font Conky Icons by Carelli}E${font} ${color #00FF00}Network Interfaces $color \n${goto 50} Device not connected.\n'
         end
@@ -163,6 +138,46 @@ function conky_drawnetworks(n)
     return active_network_interface
 end
 
+-- Returns CPU temperature in Celsius
+function conky_cputemp()
+    if tonumber(conky_parse("$updates")) % 2 == 0 or ctemp == 0 then
+        local all_hwmon_temp_names = io.popen('ls /sys/class/hwmon/*/temp* | grep -Po --regexp ".*(label)$"')
+        local cpu_temp_file = ''
+        for l in all_hwmon_temp_names:lines() do
+            local name = io.popen('cat ' .. l):read("*a")
+            if name:match("^Package*") then
+                cpu_temp_file = l:gsub("label", "input")
+                break
+            end
+        end
+        all_hwmon_temp_names:close()
+        cpu_temp_file = io.open(cpu_temp_file, "r")
+        local cpu_temp = tonumber(cpu_temp_file:read("*a"))  / 1000
+        ctemp = cpu_temp
+        cpu_temp_file:close()
+        return cpu_temp
+    end
+    return ctemp
+end
+
+-- Returns Nth fan's speed in RPM
+function conky_fanrpm(n)
+    if tonumber(conky_parse("$updates")) % 2 == 0 or fan == 0 then
+        local all_hwmon_fan = io.popen('ls /sys/class/hwmon/*/fan?_input')
+        for l in all_hwmon_fan:lines() do
+            if l:match('fan' .. n .. '_input') then
+                local fan_file = io.open(l, 'r')
+                local fan_rpm = tonumber(fan_file:read('*a'))
+                fan = fan_rpm
+                return fan_rpm
+            end
+        end
+        all_hwmon_fan:close()
+    end
+    return fan
+end
+
+-- Trims given string and returns
 function trim(s)
    return s:gsub("^%s+", ""):gsub("%s+$", "")
 end

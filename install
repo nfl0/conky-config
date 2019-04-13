@@ -3,7 +3,7 @@
 # install conky on debian based os with requirements
 CONKY=$( which conky )
 if [ ! -f $CONKY ]; then
-    sudo apt install conky-all grep -y
+    sudo apt install conky-all fonts-font-awesome grep -y
 else
     echo "Conky already installed"
 fi
@@ -28,6 +28,9 @@ echo "Added autostart entry at $AUTOSTART"
 
 # make executable
 sudo chmod +x "$CONKY_PATH/*.sh"
+
+# git update submodules
+git submodule update --init --recursive
 
 # compile xeventbind and move to coky
 cd xeventbind
