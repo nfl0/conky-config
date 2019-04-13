@@ -7,7 +7,6 @@ mounted_media = ''
 cpus = -1
 active_network_interface = false
 
--- Main call
 function conky_main()
     if conky_window == nil then
         return
@@ -24,7 +23,6 @@ function conky_main()
     cr=nil
 end
 
--- Return processor name
 function conky_processor()
     if processor == '' then
         local file = io.popen("lscpu | grep -Po '(?<=Model name:)(.*)'")
@@ -35,7 +33,6 @@ function conky_processor()
     return processor
 end
 
--- Returs distribution name
 function conky_distribution()
     if distribution == '' then
         local file = io.popen('cat /etc/lsb-release | grep -Po --regexp "(?<=DISTRIB_ID=).*$"')
@@ -48,17 +45,16 @@ function conky_distribution()
     return distribution
 end
 
--- Draw max 'n' mounted media stats 
 function conky_mountmedia(n)
     if tonumber(conky_parse("$updates")) % 2 == 0 then
-        local file = io.popen("lsblk | grep -oE '(/media/.*)$'")
+        local file = io.popen('lsblk | grep -oE ".*sd.* part /.*" | grep -oE "(/.*)"')
         local count = 1
         local media = ''
         for line in file:lines() do
-            local short_name = string.sub(string.sub(trim(line), string.find(trim(line), '/[^/]*$')), 2)
+            local short_name = string.sub(string.sub(trim(line), string.find(trim(line), '/[^/]*$')), 1)
             if count <= tonumber(n) then
                 media = media
-                        .. "${goto 20}".. short_name .. "${goto  150}${fs_bar 7,70 " .. trim(line)
+                        .. "${goto 10}".. short_name .. "${goto  150}${fs_bar 7,70 " .. trim(line)
                         .. "}${goto 255}${fs_used " .. trim(line) .. "}/${fs_size " .. trim(line) .. "}"
                         .. "\n"
             else
@@ -73,7 +69,6 @@ function conky_mountmedia(n)
         return mounted_media
 end
 
--- draw all cpu cores
 function conky_drawcpus()
     if cpus == -1 then
         local file = io.popen("lscpu -a -p='cpu' | tail -n 1")
@@ -96,7 +91,6 @@ function conky_drawcpus()
     return conky_cpus   
 end
 
--- Draw max 'n' network stats
 function conky_drawnetworks(n)
     local active_ifaces = {}
     if active_network_interface == false or tonumber(conky_parse("$updates")) % 2 == 0 then
@@ -109,6 +103,40 @@ function conky_drawnetworks(n)
         end
         ifaces:close()
         if table.maxn(active_ifaces) >= 1 then
+            -- local wireless_ifaces = {}
+            
+            -- local other_ifaces = {}
+            -- local nwl_fl = io.popen('iwconfig | grep "no wireless extensions"')
+            -- for line in nwl_fl:lines() do
+            --     local oiface = string.sub(line, 1, string.find(a, " "))
+            --     if string.match(oiface, table.concat(active_if, ",")) then
+            --         table.insert(other_ifaces,oiface)
+            --     end
+            -- end
+
+            -- for i, iface in pairs(active_ifaces) do
+            --     if not string.match(iface, table.concat(other_ifaces, ",")) then
+            --         table.insert(wireless_ifaces, iface)
+            --     end
+            -- end
+
+            -- local draw_wlans = ''
+            -- for i, wlan in pairs(wireless_ifaces) do
+            --     draw_wlans = draw_wlans
+            --                     .. "${goto 20}${font Conky Icons by Carelli}E${font}${color #00FF00} "
+            --                     .. wlan .." $color channel: ${wireless_channel " .. wlan ..  "}, freq: ${wireless_freq "
+            --                     .. wlan .."}" .. "\n"
+            --                     .. "${goto 20}${font FontAwesome} ${font}${voffset 0} ${addrs " .. wlan ..  "} MAC: ${wireless_ap "
+            --                     .. wlan ..  "}" .. "\n"
+            --                     .. "${goto 20}${upspeedgraph " .. wlan ..  " 30,250 00ffff 00ff00}${goto 202}${downspeedgraph "
+            --                     .. wlan ..  " 30,175 FFFF00 DD3A21}" .. "\n"
+            --                     .. "${font FontAwesome}${goto 20}${font} ${upspeed "
+            --                     .. wlan ..  "}${font FontAwesome}${goto 202}${font} ${downspeed " .. wlan ..  "}" .. "\n"
+            --     if i < table.maxn( wireless_ifaces ) or i < table.maxn( active_ifaces ) then
+            --         draw_wlans = draw_wlans .. "${goto 20}${stippled_hr 1}\n"
+            --     end
+            -- end
+
             local draw_other_ifaces = '${goto 10}${font Conky Icons by Carelli}E${font} ${color #00FF00}Network Interfaces $color \n'
             for i, iface in pairs(active_ifaces) do
                 if i <= tonumber(n) then
@@ -126,6 +154,8 @@ function conky_drawnetworks(n)
             end
             active_network_interface = draw_other_ifaces
             return active_network_interface
+            -- active_network_interface = table.concat( active_ifaces, ",")
+            -- return table.concat( active_ifaces, ",")
         else
             return '${goto 10}${font Conky Icons by Carelli}E${font} ${color #00FF00}Network Interfaces $color \n${goto 50} Device not connected.\n'
         end
@@ -133,7 +163,6 @@ function conky_drawnetworks(n)
     return active_network_interface
 end
 
---function to trim strings
 function trim(s)
    return s:gsub("^%s+", ""):gsub("%s+$", "")
 end

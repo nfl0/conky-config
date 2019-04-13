@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# install conky on debian based os
+# install conky on debian based os with requirements
 CONKY=$( which conky )
 if [ ! -f $CONKY ]; then
-    sudo apt install conky-all -y
+    sudo apt install conky-all grep -y
 else
     echo "Conky already installed"
 fi
