@@ -23,7 +23,7 @@ If asked password enter it. It is required to create autostart entry.
 
 # Demo
 ![gif](https://github.com/ajitjadhav28/conky-config/blob/master/demo.gif)
-![Screenshot](https://github.com/ajitjadhav28/conky-config/blob/master/Screenshot%20from%202019-04-02%2022-07-37.png)
+![Screenshot](https://github.com/ajitjadhav28/conky-config/blob/master/Screenshot%20from%202019-04-02%2022-07-37.jpg)
   
 #### **Notes**:
 You need to install following fonts
