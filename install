@@ -1,12 +1,7 @@
 #!/bin/bash
 
 # install conky on debian based os with requirements
-CONKY=$( which conky )
-if [ ! -f $CONKY ]; then
-    sudo apt install conky-all fonts-font-awesome grep -y
-else
-    echo "Conky already installed"
-fi
+sudo apt install conky-all git fonts-font-awesome grep -y
 
 CONKY_PATH=~/.config/conky
 AUTOSTART="/etc/xdg/autostart"

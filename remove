@@ -3,12 +3,9 @@
 # Kill processes
 kill $( top -bn1 | grep "conky$" | awk '{print $1}' )
 kill $( top -bn1 | grep "xeventbind$" | awk '{print $1}' )
-
+echo "Killed conky processes."
 # remove conky on debian based os
-CONKY=$( which conky )
-if [ -f $CONKY ]; then
-    sudo apt remove conky-all -y
-fi
+sudo apt remove conky conky-all -y
 
 CONKY_PATH=~/.config/conky
 AUTOSTART="/etc/xdg/autostart"
