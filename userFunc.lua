@@ -6,7 +6,7 @@ distribution = ''
 mounted_media = ''
 cpus = -1
 active_network_interface = false
-fan = 0
+fan = -1
 ctemp = 0
 
 -- Conky main function
@@ -52,7 +52,7 @@ end
 
 -- Draws max n mounted partitions and its stats
 function conky_mountmedia(n)
-    if tonumber(conky_parse("$updates")) % 2 == 0 then
+    if tonumber(conky_parse("$updates")) % 4 == 0 then
         local file = io.popen('lsblk | grep -oE ".*sd.* part /.*" | grep -oE "(/.*)"')
         local count = 1
         local media = ''
@@ -77,7 +77,7 @@ end
 
 -- Draws all cpu cores stats
 function conky_drawcpus()
-    if cpus == -1 or tonumber(conky_parse("$updates")) % 2 == 0 then
+    if cpus == -1 then
         local file = io.popen("lscpu -a -p='cpu' | tail -n 1")
         local ncpu = trim(file:read("*a"))
         file:close()
@@ -132,7 +132,7 @@ function conky_drawnetworks(n)
             active_network_interface = draw_other_ifaces
             return active_network_interface
         else
-            return '${goto 10}${font FontAwesome}${font} ${color #00FF00}Network Interfaces $color \n${goto 50} Device not connected.\n'
+            active_network_interface = '${goto 10}${font FontAwesome}${font} ${color #00FF00}Network Interfaces $color \n${goto 50} Device not connected.\n'
         end
     end
     return active_network_interface
@@ -162,13 +162,14 @@ end
 
 -- Returns Nth fan's speed in RPM
 function conky_fanrpm(n)
-    if tonumber(conky_parse("$updates")) % 2 == 0 or fan == 0 then
+    if tonumber(conky_parse("$updates")) % 2 == 0 or fan == -1 then
         local all_hwmon_fan = io.popen('ls /sys/class/hwmon/*/fan?_input')
         for l in all_hwmon_fan:lines() do
             if l:match('fan' .. n .. '_input') then
                 local fan_file = io.open(l, 'r')
                 local fan_rpm = tonumber(fan_file:read('*a'))
                 fan = fan_rpm
+                all_hwmon_fan:close()
                 return fan_rpm
             end
         end
