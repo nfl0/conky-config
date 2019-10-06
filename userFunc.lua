@@ -165,7 +165,7 @@ function conky_drawnetworks(n)
             active_network_interface = draw_other_ifaces
             return active_network_interface
         else
-            active_network_interface = '${goto 10}${font FontAwesome}${font} ${color #00FF00}Network Interfaces $color \n${goto 50} Device not connected.\n'
+            active_network_interface = '${goto 10}${font FontAwesome}${font} ${color #00FF00}Network Interfaces $color \n${goto 50} Device not connected.\n'
         end
     end
     return active_network_interface
