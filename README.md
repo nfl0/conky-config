@@ -11,13 +11,19 @@ Conky configurations with following features:
 
 # Install
 Install Conky-manager
-`sudo add-apt-repository ppa:teejee2008/ppa`
-`sudo apt update`
-`sudo apt install conky-manager`
+
+  `sudo add-apt-repository ppa:teejee2008/ppa`
+
+  `sudo apt update`
+
+  `sudo apt install conky-manager`
 
 Clone this repo inside your Conky theme folder
-`cd ~/.conky`
-`git clone https://github.com/nfl0/conky-config`
+
+  `cd ~/.conky`
+  
+  `git clone https://github.com/nfl0/conky-config`
+  
 then open conky-manager and enable DOS-Classic
 
 # Demo
