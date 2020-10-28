@@ -21,6 +21,6 @@ Clone this repo inside your Conky theme folder
 then open conky-manager and enable DOS-Classic
 
 # Demo
-![gif](https://github.com/ajitjadhav28/conky-config/blob/master/demo.png)
-![Screenshot](https://github.com/ajitjadhav28/conky-config/blob/master/screenshot_full.png)
+![gif](https://github.com/nfl0/conky-config/blob/master/demo.png)
+![Screenshot](https://github.com/nfl0/conky-config/blob/master/screenshot_full.png)
 
