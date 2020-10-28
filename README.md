@@ -1,29 +1,26 @@
 # conky-config
-Conky configurations for laptop with following features:
-- Conky is displayed always on primary monitor (using resolution change events)
-- with installation of config and fonts (installation tested  on ubuntu 18.04)
-- Laptop-Desktop Mode Indicator
-- battery indicator with capacity
-- CPU, RAM, HDD, Network info
-- top 5 cpu hungry processes
-- all drives mounted in /media/$user/* are shown (default max 6)   
+Conky configurations with following features:
+- Conky is displayed on top-right 
+- config (installation tested on MX-19.2 Debian 10 KDE Plasma 5.14.5)
+- CPU, Nvidia GPU, RAM, SSD, Processes, Network info
+- top 3 cpu and ram hungry processes
+- File system size
+- Free space on the file system available for users. 
 
-This is fork of [andrea-rosa/conky-config](https://github.com/andrea-rosa/conky-config) repository.
-It is modified according to my needs for Dell Inspiron 5520 laptop.
-Thanks to [andrea-rosa](https://github.com/andrea-rosa) for this beautiful configuration and [ritave](https://github.com/ritave/xeventbind) for xeventbind.
+[Conky Manager](https://github.com/teejee2008/conky-manager) is a convinient tool for managing Conky configuration files.
 
 # Install
-Make script executable
-`sudo chmod +x install`
-then install
-`./install`
-If asked password enter it. It is required to create autostart entry.
-#### This script installs conky on ubuntu if not installed. On distroes other than debian-based, conky-all should be installed first.
+Install Conky-manager
+`sudo add-apt-repository ppa:teejee2008/ppa`
+`sudo apt update`
+`sudo apt install conky-manager`
+
+Clone this repo inside your Conky theme folder
+`cd ~/.conky`
+`git clone https://github.com/nfl0/conky-config`
+then open conky-manager and enable DOS-Classic
 
 # Demo
-![gif](https://github.com/ajitjadhav28/conky-config/blob/master/demo.gif)
-![Screenshot](https://github.com/ajitjadhav28/conky-config/blob/master/screenshot_full.jpg)
-  
-#### **Notes**:
-You need to install following fonts
-1. [Font Awesome](https://github.com/FortAwesome/Font-Awesome)
+![gif](https://github.com/ajitjadhav28/conky-config/blob/master/demo.png)
+![Screenshot](https://github.com/ajitjadhav28/conky-config/blob/master/screenshot_full.png)
+
